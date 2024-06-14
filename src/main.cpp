@@ -58,7 +58,7 @@ extern "C" void app_main() {
     panel_init(); // do this next
     power.lcd_voltage(3.0);
     gyro.initialize();
-    gyro.gyro_dps(mpu6886_dps::dps500);
+    gyro.gyro_dps(mpu6886_dps::dps250);
     // init the screen and callbacks
     main_screen.dimensions({320,240});
     main_screen.buffer_size(panel_transfer_buffer_size);
