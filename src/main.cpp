@@ -97,6 +97,6 @@ void loop()
     
     float tempF = 9*tempC/5 + 32;
     
-    main_gyro.set(80,gyroX,-gyroY,-gyroZ);
+    main_gyro.set(80,gyroX*.2,-gyroY*.2,-gyroZ*.2);
     panel_update();
 }
