@@ -152,7 +152,8 @@ class cube3d {
         point3d_t e1 = transform_and_rotate(w1);
         point3d_t n1 = {
             m_camera.focal * e1.x / e1.z,
-            m_camera.focal * e1.y / e1.z
+            m_camera.focal * e1.y / e1.z,
+            0
         };
         
         // view mapping

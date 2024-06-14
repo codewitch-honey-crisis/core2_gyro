@@ -4,9 +4,6 @@
 #include <freertos/FreeRTOS.h>
 #include <stdint.h>
 void loop();
-static uint32_t millis() {
-    return pdTICKS_TO_MS(xTaskGetTickCount());
-}
 #endif
 #include <esp_i2c.hpp> // i2c initialization
 #ifdef M5STACK_CORE2
