@@ -88,14 +88,6 @@ void loop()
 {
     float gyroX,gyroY,gyroZ;
     gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
-    float accX, accY, accZ;    
-    gyro.acc_xyz(&accX, &accY, &accZ);
-    float pitch,yaw,roll;
-    gyro.ahrs(&pitch,&roll,&yaw);
-    float tempC;
-    gyro.temp(&tempC);
-    
-    float tempF = 9*tempC/5 + 32;
     
     main_gyro.set(80,gyroX*.2,-gyroY*.2,-gyroZ*.2);
     panel_update();
