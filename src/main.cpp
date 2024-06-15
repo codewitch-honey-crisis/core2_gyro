@@ -88,6 +88,6 @@ void loop()
     x+=gyroX;
     y-=gyroY;
     z-=gyroZ;
-    main_gyro.set(80,x*.2,y*.2,z*.2);
+    main_gyro.set(80,x*.4,y*.4,z*.4);
     panel_update();
 }
