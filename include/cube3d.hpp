@@ -28,11 +28,10 @@ class cube3d {
     point2d_t m_points2d[points_size];
     camera_t m_camera;
     static void matrix_normalize(point3d_t& value) {
-        // TODO: eliminate divs
-        float length = sqrtf(value.x * value.x + value.y * value.y + value.z * value.z);
-        value.x/=length;
-        value.y/=length;
-        value.z/=length;
+        float length = 1.0f/sqrtf(value.x * value.x + value.y * value.y + value.z * value.z);
+        value.x*=length;
+        value.y*=length;
+        value.z*=length;
     }
     static point3d_t matrix_cross_product(const point3d_t& lhs,const point3d_t& rhs) {
         return {
@@ -46,13 +45,13 @@ class cube3d {
         for (size_t i = 0; i < points_size; i++)
         {
             point3d_t& p = m_points[i];
-            float x_ = p.x;
-            float y_ = (float)(p.y * cosf(th) - p.z * sinf(th));
-            float z_ = (float)(p.y * sinf(th) + p.z * cosf(th));
+            float x = p.x;
+            float y = (float)(p.y * cosf(th) - p.z * sinf(th));
+            float z = (float)(p.y * sinf(th) + p.z * cosf(th));
 
-            p.x = x_;
-            p.y = y_;
-            p.z = z_;
+            p.x = x;
+            p.y = y;
+            p.z = z;
         }
     }
     void rotate_y(float theta) {
@@ -60,13 +59,13 @@ class cube3d {
         for (size_t i = 0; i < points_size; i++)
         {
             point3d_t& p = m_points[i];
-            float x_ = (float)(p.z * sinf(th) + p.x * cosf(th));
-            float y_ = p.y;
-            float z_ = (float)(p.z * cosf(th) - p.x * sinf(th));
+            float x = (float)(p.z * sinf(th) + p.x * cosf(th));
+            float y = p.y;
+            float z = (float)(p.z * cosf(th) - p.x * sinf(th));
 
-            p.x = x_;
-            p.y = y_;
-            p.z = z_;
+            p.x = x;
+            p.y = y;
+            p.z = z;
         }
     }
     void rotate_z(float theta) {
@@ -74,13 +73,13 @@ class cube3d {
         for (size_t i = 0; i < points_size; i++)
         {
             point3d_t& p = m_points[i];
-            float x_ = (float)(p.x * cosf(th) - p.y * sinf(th));
-            float y_ = (float)(p.x * sinf(th) + p.y * cosf(th));
-            float z_ = p.z;
+            float x = (float)(p.x * cosf(th) - p.y * sinf(th));
+            float y = (float)(p.x * sinf(th) + p.y * cosf(th));
+            float z = p.z;
 
-            p.x = x_;
-            p.y = y_;
-            p.z = z_;
+            p.x = x;
+            p.y = y;
+            p.z = z;
         }
     }
     void translate_x(float tx) {
@@ -120,46 +119,19 @@ class cube3d {
             w.x * m_camera.look_dir.x + w.y * m_camera.look_dir.y + w.z * m_camera.look_dir.z
         };
     }
-    void rotate(point3d_t v1,point3d_t v2, float ang)
+    point2d_t project(const point3d_t& value)
     {
-        translate_x(v1.x * -1);
-        translate_y(v1.y * -1);
-        translate_z(v1.z * -1);
-        
-        float dx = v2.x - v1.x;
-        float dy = v2.y - v1.y;
-        float dz = v2.z - v1.z;
-
-        float theta = (float)atan2f(dy, dx);
-        float phi = (float)atan2f(sqrtf(dx * dx + dy * dy), dz);
-
-        theta = (float)(theta * 180 / pi);
-        phi = (float)(phi * 180 / pi);
-
-        rotate_z(theta * -1);
-        rotate_y(phi * -1);
-        rotate_z(ang);
-
-        rotate_y(phi * 1);
-        rotate_z(theta * 1);
-
-        translate_z(v1.z * 1);
-        translate_y(v1.y * 1);
-        translate_x(v1.x * 1);
-    }
-    point2d_t project(const point3d_t& w1)
-    {
-        point3d_t e1 = transform_and_rotate(w1);
-        point3d_t n1 = {
-            m_camera.focal * e1.x / e1.z,
-            m_camera.focal * e1.y / e1.z,
+        point3d_t xfrm = transform_and_rotate(value);
+        xfrm = {
+            m_camera.focal * xfrm.x / xfrm.z,
+            m_camera.focal * xfrm.y / xfrm.z,
             0
         };
         
         // view mapping
         point2d_t result;
-        result.x = (int)(m_camera.center.x + n1.x);
-        result.y = (int)(m_camera.center.y + n1.y);
+        result.x = (int)(m_camera.center.x + xfrm.x);
+        result.y = (int)(m_camera.center.y + xfrm.y);
         return result;
     }
     void camera_initialize() {
@@ -184,12 +156,7 @@ class cube3d {
             m_points[i].z*=scale;
         }
     }
-    static void dump_point(point2d_t p) {
-        printf("(%d,%d)\n",(int)p.x,(int)p.y);
-    }
-    static void dump_point(const point3d_t& p) {
-        printf("(%f,%f,%f)\n",p.x,p.y,p.z);
-    }
+    
 public:
     cube3d() {
         m_camera.center = {160,120};
