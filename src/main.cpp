@@ -72,7 +72,6 @@ extern "C" void app_main() {
     
     panel_set_active_screen(main_screen);
 
-
 #ifndef ARDUINO
     while(1) {
         loop();
@@ -85,7 +84,10 @@ void loop()
 {
     float gyroX,gyroY,gyroZ;
     gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
-    
-    main_gyro.set(80,gyroX*.2,-gyroY*.2,-gyroZ*.2);
+    static float x=0,y=0,z=0;
+    x+=gyroX;
+    y-=gyroY;
+    z-=gyroZ;
+    main_gyro.set(80,x*.2,y*.2,z*.2);
     panel_update();
 }
