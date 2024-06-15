@@ -66,7 +66,7 @@ extern "C" void app_main() {
     main_screen.buffer2(panel_transfer_buffer2);
     main_screen.background_color(color_t::purple);
     
-    // set up a custom canvas for displaying our battery icon
+    // set up the control for displaying our cube
     main_gyro.bounds(main_screen.bounds());
     main_screen.register_control(main_gyro);
     
