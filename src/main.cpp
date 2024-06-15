@@ -3,6 +3,9 @@
 #else
 #include <freertos/FreeRTOS.h>
 #include <stdint.h>
+uint32_t millis() {
+    return pdTICKS_TO_MS(xTaskGetTickCount());
+}
 void loop();
 #endif
 #include <esp_i2c.hpp> // i2c initialization
@@ -82,12 +85,30 @@ extern "C" void app_main() {
 
 void loop()
 {
+    static int frames = 0;
+    static int time_ts = millis();
     float gyroX,gyroY,gyroZ;
+    static long long total_ms = 0;
+    uint32_t start_ts = millis();
     gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
+    //printf("x: %f\n",gyroX);
     static float x=0,y=0,z=0;
     x+=gyroX;
     y-=gyroY;
     z-=gyroZ;
     main_gyro.set(80,x*.4,y*.4,z*.4);
     panel_update();
+    uint32_t end_ts = millis();
+    total_ms += (end_ts-start_ts);
+    ++frames;
+    if(millis()>=time_ts+1000) {
+        if(frames==0) {
+            printf("<1 FPS, Total: %dms\n",(int)total_ms);
+        } else {
+            printf("%d FPS, Avg: %dms\n",frames,(int)(total_ms/frames));
+        }
+        frames = 0;
+        total_ms = 0;
+        time_ts = millis();
+    }
 }
