@@ -10,7 +10,7 @@ using color32_t = gfx::color<gfx::rgba_pixel<32>>; // uix
 using screen_t = uix::screen<gfx::rgb_pixel<16>>;
 using surface_t = screen_t::control_surface_type;
 
-using canvas_t = uix::canvas<surface_t>;
+using label_t = uix::label<surface_t>;
 
 template<typename ControlSurfaceType>
 class gyro_box : public uix::control<ControlSurfaceType> {
@@ -69,4 +69,5 @@ using gyro_box_t = gyro_box<surface_t>;
 
 // the screen/control declarations
 extern screen_t main_screen;
+extern label_t main_title;
 extern gyro_box_t main_cube;
