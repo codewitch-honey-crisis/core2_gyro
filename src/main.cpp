@@ -80,7 +80,7 @@ extern "C" void app_main() {
     main_screen.background_color(color_t::purple);
     
     // set up the control for displaying our cube
-    main_cube.bounds(ssize16(128,128).bounds().center(main_screen.bounds()));
+    main_cube.bounds(ssize16(100,100).bounds().center(main_screen.bounds()));
     main_screen.register_control(main_cube);
     
     panel_set_active_screen(main_screen);
