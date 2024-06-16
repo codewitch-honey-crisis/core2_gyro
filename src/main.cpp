@@ -69,7 +69,6 @@ extern "C" void app_main() {
 #endif
     power.initialize(); // do this first
     panel_init(); // do this next
-    power.lcd_voltage(3.0);
     gyro.initialize();
     gyro.gyro_dps(mpu6886_dps::dps250);
     gyro.calibrate();
