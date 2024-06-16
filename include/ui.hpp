@@ -69,4 +69,4 @@ using gyro_box_t = gyro_box<surface_t>;
 
 // the screen/control declarations
 extern screen_t main_screen;
-extern gyro_box_t main_gyro;
+extern gyro_box_t main_cube;

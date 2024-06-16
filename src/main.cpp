@@ -46,7 +46,7 @@ static power_t power(esp_i2c<1,21,22>::instance);
 
 // the screen/control definitions
 screen_t main_screen;
-gyro_box_t main_gyro(main_screen);
+gyro_box_t main_cube(main_screen);
 mpu6886 gyro (esp_i2c<1,21,22>::instance);
 
 #ifdef ARDUINO
@@ -70,8 +70,8 @@ extern "C" void app_main() {
     main_screen.background_color(color_t::purple);
     
     // set up the control for displaying our cube
-    main_gyro.bounds(ssize16(128,128).bounds().center(main_screen.bounds()));
-    main_screen.register_control(main_gyro);
+    main_cube.bounds(ssize16(128,128).bounds().center(main_screen.bounds()));
+    main_screen.register_control(main_cube);
     
     panel_set_active_screen(main_screen);
 
@@ -91,12 +91,11 @@ void loop()
     static long long total_ms = 0;
     uint32_t start_ts = millis();
     gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
-    //printf("x: %f\n",gyroX);
     static float x=0,y=0,z=0;
     x+=gyroX;
     y-=gyroY;
     z-=gyroZ;
-    main_gyro.set({50,50},35,x*.1,y*.1,z*.1);
+    main_cube.set({50,50},35,x*.1,y*.1,z*.1);
     panel_update();
     uint32_t end_ts = millis();
     total_ms += (end_ts-start_ts);
