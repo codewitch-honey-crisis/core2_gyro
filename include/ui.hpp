@@ -49,8 +49,8 @@ class gyro_box : public uix::control<ControlSurfaceType> {
     virtual ~gyro_box() {
        
     }
-    void set(float scale, float x, float y,float z) {
-        m_cube.set(scale,x,y,z);
+    void set(gfx::spoint16 center, float scale, float x, float y,float z) {
+        m_cube.set(center,scale,x,y,z);
         m_cube.update();
         this->invalidate();
     }

@@ -159,7 +159,7 @@ class cube3d {
     
 public:
     cube3d() {
-        m_camera.center = {160,120};
+        m_camera.center = {0,0};
         m_camera.focal = 350;
         m_camera.cop = {0, 0, -450};
         m_camera.look_at = {0, 0, 50};
@@ -180,8 +180,9 @@ public:
         copy_to(rhs);
         return *this;
     }
-    void set(float scale, float x, float y, float z) {
+    void set(gfx::spoint16 center, float scale, float x, float y, float z) {
         memcpy(m_points,points,points_size*sizeof(point3d_t));
+        m_camera.center = center;
         this->scale(scale);
         this->rotate_x(x);
         this->rotate_y(y);

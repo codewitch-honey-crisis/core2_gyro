@@ -70,7 +70,7 @@ extern "C" void app_main() {
     main_screen.background_color(color_t::purple);
     
     // set up the control for displaying our cube
-    main_gyro.bounds(main_screen.bounds());
+    main_gyro.bounds(ssize16(128,128).bounds().center(main_screen.bounds()));
     main_screen.register_control(main_gyro);
     
     panel_set_active_screen(main_screen);
@@ -96,7 +96,7 @@ void loop()
     x+=gyroX;
     y-=gyroY;
     z-=gyroZ;
-    main_gyro.set(80,x*.4,y*.4,z*.4);
+    main_gyro.set({50,50},35,x*.1,y*.1,z*.1);
     panel_update();
     uint32_t end_ts = millis();
     total_ms += (end_ts-start_ts);
