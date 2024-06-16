@@ -55,12 +55,13 @@ void setup() {
     printf("Arduino version: %d.%d.%d\n",ESP_ARDUINO_VERSION_MAJOR,ESP_ARDUINO_VERSION_MINOR,ESP_ARDUINO_VERSION_PATCH);
 #else
 void loop_task(void* arg) {
-    int count = 6;
+    int count;
     while(1) {
+        count = 10;
         while(count--) {
             loop();
         }
-        vTaskDelay(5);
+        vTaskDelay(1);
     }
 }
 extern "C" void app_main() {
