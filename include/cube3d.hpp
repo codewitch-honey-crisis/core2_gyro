@@ -118,31 +118,6 @@ class cube3d {
             p.z = z;
         }
     }
-    void translate_x(float tx) {
-        for (size_t i = 0; i < points_size; i++)
-        {
-            m_points[i].x+=tx;
-        }
-    }
-    void translate_y(float ty) {
-        for (size_t i = 0; i < points_size; i++)
-        {
-            m_points[i].y+=ty;
-        }
-    }
-    void translate_z(float tz) {
-        for (size_t i = 0; i < points_size; i++)
-        {
-            m_points[i].z+=tz;
-        }
-    }
-    void translate(float xr, float yr, float zr) {
-        for (size_t i = 0; i < points_size; i++) {
-            m_points[i].x+=xr;
-            m_points[i].y+=yr;
-            m_points[i].z+=zr;
-        }
-    }
     point3d_t transform_and_rotate(const point3d_t& a) const
     {
         point3d_t w = a;
