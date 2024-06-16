@@ -102,7 +102,7 @@ void loop()
     static float x=0,y=0,z=0;
     x+=gyroX;
     y-=gyroY;
-    z-=gyroZ;
+    z+=gyroZ;
     main_cube.set({50,50},35,x*.1,y*.1,z*.1);
     panel_update();
     uint32_t end_ts = millis();
