@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <Wire.h>
 #include <m5core2_power.hpp> // AXP192 power management (core2)
 #include <uix.hpp> // user interface library
 #include <gfx.hpp> // graphics library
@@ -16,7 +17,6 @@ using namespace uix; // user interface
 using power_t = m5core2_power;
 // for AXP192 power management
 static power_t power(Wire1);
-
 
 // the screen/control definitions
 screen_t main_screen;
