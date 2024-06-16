@@ -6,8 +6,8 @@
 #include <mpu6886.hpp> // motion
 // font is a TTF/OTF from downloaded from fontsquirrel.com
 // converted to a header with https://honeythecodewitch.com/gfx/converter
-#define OPENSANS_REGULAR_IMPLEMENTATION
-#include "assets/OpenSans_Regular.hpp" // our font
+#define TELEGRAMA_IMPLEMENTATION
+#include "assets/telegrama.hpp" // our font
 #include "ui.hpp" // ui declarations
 #include "panel.hpp" // display panel functionality
 
@@ -43,9 +43,9 @@ void setup() {
     main_cube.bounds(ssize16(100,100).bounds().center(main_screen.bounds()));
     main_screen.register_control(main_cube);
     
-    main_title.text_open_font(&OpenSans_Regular);
+    main_title.text_open_font(&telegrama);
     main_title.text("MPU6886 demo");
-    main_title.text_line_height(50);
+    main_title.text_line_height(30);
     main_title.text_justify(uix_justify::top_middle);
     main_title.text_color(color32_t::green);
     main_title.padding({0,0});
