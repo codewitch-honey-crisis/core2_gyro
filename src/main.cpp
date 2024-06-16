@@ -54,6 +54,15 @@ void setup() {
     Serial.begin(115200);
     printf("Arduino version: %d.%d.%d\n",ESP_ARDUINO_VERSION_MAJOR,ESP_ARDUINO_VERSION_MINOR,ESP_ARDUINO_VERSION_PATCH);
 #else
+void loop_task(void* arg) {
+    int count = 6;
+    while(1) {
+        while(count--) {
+            loop();
+        }
+        vTaskDelay(5);
+    }
+}
 extern "C" void app_main() {
     printf("ESP-IDF version: %d.%d.%d\n",ESP_IDF_VERSION_MAJOR,ESP_IDF_VERSION_MINOR,ESP_IDF_VERSION_PATCH);
 #endif
@@ -76,10 +85,8 @@ extern "C" void app_main() {
     panel_set_active_screen(main_screen);
 
 #ifndef ARDUINO
-    while(1) {
-        loop();
-        vTaskDelay(5);
-    }
+    TaskHandle_t handle;
+    xTaskCreatePinnedToCore(loop_task,"loop_task",4096,nullptr,24,&handle,xTaskGetAffinity(xTaskGetCurrentTaskHandle()));
 #endif
 }
 
