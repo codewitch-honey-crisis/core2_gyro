@@ -1,3 +1,39 @@
+/*
+
+I can't do trig to save my life so I pulled the math from this C# project
+https://github.com/mahmoudai1/3D-cube-vs-circles/tree/main/Graphics_2_Project
+
+I've posted the original license for that code below.
+
+There's not much left of it, except the equations themselves.
+
+*/
+
+
+/* ORIGINAL LICENSE
+MIT License
+
+Copyright (c) 2022 Mahmoud Ahmed
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
 #pragma once
 #include <gfx.hpp>
 #include <stddef.h>
@@ -20,7 +56,7 @@ typedef struct {
 template<typename Destination>
 class cube3d {
     static point3d_t points[];
-    static constexpr const float pi = 3.141592654f; 
+    static constexpr const float pi = PI; 
     static constexpr const size_t points_size = 8;
     point3d_t m_points[points_size];
     static constexpr const size_t edges_size = 12;
