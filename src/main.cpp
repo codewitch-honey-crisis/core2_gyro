@@ -124,9 +124,7 @@ static void uix_on_flush(const rect16& bounds, const void* bmp, void* state) {
     int x1 = bounds.x1, y1 = bounds.y1, x2 = bounds.x2 + 1, y2 = bounds.y2 + 1;
     esp_lcd_panel_draw_bitmap(lcd_handle, x1, y1, x2, y2, (void*)bmp);
 }
-static void uix_on_yield(void* state) {
-    taskYIELD();
-}
+
 // for AXP192 power management
 static m5core2_power power(esp_i2c<1,21,22>::instance);
 static const_buffer_stream text_font_stream(telegrama,sizeof(telegrama));
@@ -163,7 +161,6 @@ extern "C" void app_main() {
     disp.buffer_size(panel_transfer_buffer_size);
     disp.buffer1(panel_transfer_buffer1);
     disp.buffer2(panel_transfer_buffer2);
-    disp.on_yield_callback(uix_on_yield);
     disp.on_flush_callback(uix_on_flush);
     // init the screen and callbacks
     main_screen.dimensions({320,240});
