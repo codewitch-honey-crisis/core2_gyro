@@ -41,7 +41,7 @@ using namespace esp_idf;
 // handle to the display
 static esp_lcd_panel_handle_t lcd_handle;
 // the transfer buffers
-static const size_t panel_transfer_buffer_size = 16*1024;
+static const size_t panel_transfer_buffer_size = bitmap<rgb_pixel<16>>::sizeof_buffer({320,48});
 static uint8_t* panel_transfer_buffer1 = nullptr;
 static uint8_t* panel_transfer_buffer2 = nullptr;
 // the currently active screen
