@@ -5,7 +5,7 @@
 // colors for the UI
 using color_t = gfx::color<gfx::rgb_pixel<16>>; // native
 using color32_t = gfx::color<gfx::rgba_pixel<32>>; // uix
-
+using vcolor_t = gfx::color<gfx::vector_pixel>; // canvas
 // the screen template instantiation aliases
 using screen_t = uix::screen<gfx::rgb_pixel<16>>;
 using surface_t = screen_t::control_surface_type;
@@ -13,19 +13,22 @@ using surface_t = screen_t::control_surface_type;
 using label_t = uix::label<surface_t>;
 
 template<typename ControlSurfaceType>
-class gyro_box : public uix::control<ControlSurfaceType> {
+class gyro_box : public uix::canvas_control<ControlSurfaceType> {
    public:
     using control_surface_type = ControlSurfaceType;
-    using base_type = uix::control<control_surface_type>;
+    using base_type = uix::canvas_control<control_surface_type>;
     using pixel_type = typename base_type::pixel_type;
     using palette_type = typename base_type::palette_type;
     using bitmap_type = gfx::bitmap<pixel_type, palette_type>;
 
    private:
-    cube3d<ControlSurfaceType> m_cube;
+    cube3d m_cube;
    public:
     gyro_box(uix::invalidation_tracker &parent, const palette_type *palette = nullptr)
         : base_type(parent, palette) {
+    }
+    gyro_box()
+        : base_type() {
     }
     gyro_box(gyro_box &&rhs) {
         m_cube = rhs.m_cube;
@@ -61,8 +64,8 @@ class gyro_box : public uix::control<ControlSurfaceType> {
     virtual void on_release() override {
         
     }
-    virtual void on_paint(control_surface_type &destination, const gfx::srect16 &clip) override {
-        m_cube.draw(destination,color_t::white);
+    virtual void on_paint(gfx::canvas &destination, const gfx::srect16 &clip) override {
+        m_cube.draw(destination,vcolor_t::white);
     }
 };
 using gyro_box_t = gyro_box<surface_t>;

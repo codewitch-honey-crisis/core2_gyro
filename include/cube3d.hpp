@@ -53,10 +53,9 @@ typedef struct {
     float focal;
     point3d_t basis_a,basis_c, look_dir;
 } camera_t;
-template<typename Destination>
 class cube3d {
     static point3d_t points[];
-    static constexpr const float pi = PI; 
+    static constexpr const float pi = 3.1415926536f; 
     static constexpr const size_t points_size = 8;
     point3d_t m_points[points_size];
     static constexpr const size_t edges_size = 12;
@@ -204,14 +203,21 @@ public:
             m_points2d[i]=this->project(m_points[i]);
         }
     }
-    void draw(Destination& destination, typename Destination::pixel_type color) {
+    void draw(gfx::canvas& destination, gfx::vector_pixel color) {
+        gfx::canvas_style si = destination.style();
+        si.stroke_color = color;
+        si.stroke_width = 3;
+        si.stroke_paint_type = gfx::paint_type::solid;
+        si.fill_paint_type = gfx::paint_type::none;
+        destination.style(si);
         for(int i = 0;i<edges_size;++i) {
-            gfx::draw::line_aa(destination,gfx::srect16(m_points2d[edges[i].first],m_points2d[edges[i].second]),color);
+            destination.move_to((gfx::pointf)m_points2d[edges[i].first]);
+            destination.line_to((gfx::pointf)m_points2d[edges[i].second]);
+            destination.render();
         }
     }
 };
-template<typename Destination>
-point3d_t cube3d<Destination>::points[] = {
+point3d_t cube3d::points[] = {
             {1,1,1},
             {1,1,-1},
             {-1,1,-1},
@@ -221,8 +227,7 @@ point3d_t cube3d<Destination>::points[] = {
             {-1,-1,-1},
             {-1,-1,1}
         };
-template<typename Destination>
-edge3d_t cube3d<Destination>::edges[] = {
+edge3d_t cube3d::edges[] = {
         {0,1},
         {1,2},
         {2,3},
