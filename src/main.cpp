@@ -188,19 +188,22 @@ void loop()
 {
     static int frames = 0;
     static int time_ts = millis();
+    static float x=0,y=0,z=0;
     float gyroX,gyroY,gyroZ;
     static long long total_ms = 0;
     uint32_t start_ts = millis();
-    gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
-    static float x=0,y=0,z=0;
-    x+=gyroX;
-    y-=gyroY;
-    z+=gyroZ;
-    main_cube.set({50,50},35,x*.1,y*.1,z*.1);
+    if(!disp.flush_pending()) {
+        gyro.gyro_xyz(&gyroX, &gyroY, &gyroZ);
+        x+=gyroX;
+        y-=gyroY;
+        z+=gyroZ;
+        main_cube.set({50,50},35,x*.1,y*.1,z*.1);
+        ++frames;
+    }
     disp.update();
     uint32_t end_ts = millis();
     total_ms += (end_ts-start_ts);
-    ++frames;
+    
     if(millis()>=time_ts+1000) {
         printf("x,y,z: %0.2f, %0.2f, %0.2f\n",x,y,z);
         if(frames==0) {
